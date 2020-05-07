@@ -29,6 +29,19 @@
 //     }
 // }
 
+// pipeline {
+//     agent {
+//         docker {
+//             image 'docker'
+//             args '-v /var/run/docker.sock:/var/run/docker.sock'
+//         }
+//     }
+
+//     stages {
+//         sh 'docker run hello-world'
+//     }
+// }
+
 pipeline {
     agent {
         docker {
@@ -36,8 +49,26 @@ pipeline {
             args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
-
+    environment {
+        CI = 'true'
+    }
     stages {
-        sh 'docker run hello-world'
+        stage('Build') {
+            steps {
+                sh 'docker run hello-world'
+            }
+        }
+        // stage('Test') {
+        //     steps {
+        //         sh './jenkins/scripts/test.sh'
+        //     }
+        // }
+        // stage('Deliver') {
+        //     steps {
+        //         sh './jenkins/scripts/deliver.sh'
+        //         input message: 'Finished using the web site? (Click "Proceed" to continue)'
+        //         sh './jenkins/scripts/kill.sh'
+        //     }
+        // }
     }
 }
