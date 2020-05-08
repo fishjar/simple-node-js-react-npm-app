@@ -25,10 +25,23 @@ pipeline {
                 sh 'npm run build'
             }
         }
-        stage('Deploy') {
+        stage('Deploy dev') {
+            when {
+                branch 'dev'
+            }
             steps {
                 sh """
-                    cat ${WORKSPACE}/build/manifest.json
+                    echo Deploy dev
+                """
+            }
+        }
+        stage('Deploy product') {
+            when {
+                branch 'master'
+            }
+            steps {
+                sh """
+                    echo Deploy product
                 """
             }
         }
