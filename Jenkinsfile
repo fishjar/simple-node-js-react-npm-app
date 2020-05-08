@@ -26,6 +26,20 @@ pipeline {
         //         sh 'yarn build'
         //     }
         // }
+        // stage('Deploy dev') {
+        //     when { branch 'dev' }
+        //     agent { label 'master' }
+        //     steps {
+        //         // sh """
+        //         //     echo "Deploy dev"
+        //         // """
+        //         echo "----WORKSPACE----: ${WORKSPACE}"
+        //         sshagent(credentials : ['fc169dae-9ebe-4279-ae37-cb41e3fead87']) {
+        //             sh 'ssh -o StrictHostKeyChecking=no root@192.168.1.36 uptime'
+        //             // sh "scp -r ${WORKSPACE}/build root@120.25.167.40:/data/tmp/build/dev"
+        //         }
+        //     }
+        // }
         stage('Deploy dev') {
             when { branch 'dev' }
             agent { label 'master' }
@@ -34,10 +48,7 @@ pipeline {
                 //     echo "Deploy dev"
                 // """
                 echo "----WORKSPACE----: ${WORKSPACE}"
-                sshagent(credentials : ['fc169dae-9ebe-4279-ae37-cb41e3fead87']) {
-                    sh 'ssh -o StrictHostKeyChecking=no root@120.25.167.40 uptime'
-                    // sh "scp -r ${WORKSPACE}/build root@120.25.167.40:/data/tmp/build/dev"
-                }
+                sh 'ssh root@192.168.1.36 uptime'
             }
         }
         // stage('Deploy product') {
