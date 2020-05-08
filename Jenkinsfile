@@ -10,11 +10,11 @@ pipeline {
         CI = 'true'
     }
     stages {
-        stage('Example') {
-            steps {
-                echo "-------WORKSPACE-------->: ${WORKSPACE}"
-            }
-        }
+        // stage('Example') {
+        //     steps {
+        //         echo "-------WORKSPACE-------->: ${WORKSPACE}"
+        //     }
+        // }
         stage('Install') {
             steps {
                 sh 'npm install'
@@ -25,11 +25,11 @@ pipeline {
                 sh 'npm run build'
             }
         }
-        stage('Deploy') {
-            steps {
-                sh 'npm run build'
-            }
-        }
+        // stage('Deploy') {
+        //     steps {
+        //         sh 'npm run build'
+        //     }
+        // }
         // stage('Test') {
         //     steps {
         //         sh './jenkins/scripts/test.sh'
