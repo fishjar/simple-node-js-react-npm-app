@@ -11,58 +11,31 @@ pipeline {
         CI = 'true'
     }
     stages {
-        // stage('Example') {
-        //     steps {
-        //         echo "-------WORKSPACE-------->: ${WORKSPACE}"
-        //     }
-        // }
         stage('Build') {
             agent { docker 'node:6-alpine' }
             steps {
-                // sh 'npm install --registry https://registry.npm.taobao.org'
-                // sh 'npm install'
-                // sh 'npm run build'
                 sh 'yarn --registry https://registry.npm.taobao.org'
                 sh 'yarn build'
             }
         }
-        // stage('Deploy dev') {
-        //     when { branch 'dev' }
-        //     agent { label 'master' }
-        //     steps {
-        //         // sh """
-        //         //     echo "Deploy dev"
-        //         // """
-        //         echo "----WORKSPACE----: ${WORKSPACE}"
-        //         sshagent(credentials : ['fc169dae-9ebe-4279-ae37-cb41e3fead87']) {
-        //             sh 'ssh -o StrictHostKeyChecking=no root@192.168.1.36 uptime'
-        //             // sh "scp -r ${WORKSPACE}/build root@120.25.167.40:/data/tmp/build/dev"
-        //         }
-        //     }
-        // }
         stage('Deploy dev') {
             when { branch 'dev' }
             agent { label 'master' }
             steps {
-                // sh """
-                //     echo "Deploy dev"
-                // """
-                echo "----WORKSPACE----: ${WORKSPACE}"
+                // echo "----WORKSPACE----: ${WORKSPACE}"
                 // sh 'ssh root@192.168.1.36 uptime'
                 sh "ssh root@192.168.1.36 'mkdir -p /data/tmp/build/dev'"
-                sh "scp -r ${WORKSPACE}/build root@192.168.1.36:/data/tmp/build/dev"
+                sh "scp -r ${WORKSPACE}/build/* root@192.168.1.36:/data/tmp/build/dev"
             }
         }
-        // stage('Deploy product') {
-        //     when {
-        //         branch 'product'
-        //     }
-        //     steps {
-        //         sh """
-        //             echo "Deploy product"
-        //         """
-        //     }
-        // }
+        stage('Deploy product') {
+            when { branch 'dev' }
+            agent { label 'master' }
+            steps {
+                sh "ssh root@192.168.1.36 'mkdir -p /data/tmp/build/product'"
+                sh "scp -r ${WORKSPACE}/build/* root@192.168.1.36:/data/tmp/build/product"
+            }
+        }
         // stage('Test') {
         //     steps {
         //         sh './jenkins/scripts/test.sh'
