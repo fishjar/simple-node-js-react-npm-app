@@ -28,7 +28,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh """
-                    cp -r ${WORKSPACE}/build /home/gabe/code/tmp/build
+                    cat ${WORKSPACE}/build/manifest.json
                 """
             }
         }
