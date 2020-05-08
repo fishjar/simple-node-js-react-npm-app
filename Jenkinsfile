@@ -10,9 +10,13 @@ pipeline {
         CI = 'true'
     }
     stages {
-        stage('Install') {
+        stage('Example') {
             steps {
                 echo "-------WORKSPACE-------->: ${WORKSPACE}"
+            }
+        }
+        stage('Install') {
+            steps {
                 sh 'npm install'
             }
         }
