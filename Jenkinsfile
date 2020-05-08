@@ -31,17 +31,17 @@ pipeline {
             }
             steps {
                 sh """
-                    echo Deploy dev
+                    echo "Deploy dev"
                 """
             }
         }
         stage('Deploy product') {
             when {
-                branch 'master'
+                branch 'product'
             }
             steps {
                 sh """
-                    echo Deploy product
+                    echo "Deploy product"
                 """
             }
         }
