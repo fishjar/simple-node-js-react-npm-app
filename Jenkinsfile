@@ -1,9 +1,10 @@
 pipeline {
     agent {
-        docker {
-            image 'node:6-alpine'
-            args '-p 3000:3000'
-        }
+        // docker {
+        //     image 'node:6-alpine'
+        //     args '-p 3000:3000'
+        // }
+        docker 'node:6-alpine'
     }
     environment {
         CI = 'true'
@@ -11,10 +12,16 @@ pipeline {
     stages {
         stage('Install') {
             steps {
+                echo "-------WORKSPACE-------->: ${WORKSPACE}"
                 sh 'npm install'
             }
         }
         stage('Build') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+        stage('Deploy') {
             steps {
                 sh 'npm run build'
             }
@@ -31,5 +38,23 @@ pipeline {
         //         sh './jenkins/scripts/kill.sh'
         //     }
         // }
+    }
+    post {
+        always {
+            echo 'This will always run'
+        }
+        success {
+            echo 'This will run only if successful'
+        }
+        failure {
+            echo 'This will run only if failed'
+        }
+        unstable {
+            echo 'This will run only if the run was marked as unstable'
+        }
+        changed {
+            echo 'This will run only if the state of the Pipeline has changed'
+            echo 'For example, if the Pipeline was previously failing but is now successful'
+        }
     }
 }
