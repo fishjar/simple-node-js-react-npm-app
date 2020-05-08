@@ -15,12 +15,12 @@ pipeline {
         //         echo "-------WORKSPACE-------->: ${WORKSPACE}"
         //     }
         // }
-        // stage('Install') {
-        //     steps {
-        //         // sh 'npm install --registry https://registry.npm.taobao.org'
-        //         sh 'npm install'
-        //     }
-        // }
+        stage('Install') {
+            steps {
+                // sh 'npm install --registry https://registry.npm.taobao.org'
+                sh 'npm install'
+            }
+        }
         stage('Build') {
             steps {
                 sh 'npm run build'
