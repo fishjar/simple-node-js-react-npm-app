@@ -49,6 +49,7 @@ pipeline {
                 // """
                 echo "----WORKSPACE----: ${WORKSPACE}"
                 // sh 'ssh root@192.168.1.36 uptime'
+                ssh "root@192.168.1.36 'mkdir -p /data/tmp/build/dev'"
                 sh "scp -r ${WORKSPACE}/build root@192.168.1.36:/data/tmp/build/dev"
             }
         }
