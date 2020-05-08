@@ -34,8 +34,8 @@ pipeline {
                 //     echo "Deploy dev"
                 // """
                 echo "----WORKSPACE----: ${WORKSPACE}"
-                sshagent(credentials : ['583a9537-f155-4cbd-b8ad-103ab53eed0c']) {
-                    sh "scp -r ${WORKSPACE}/build root@192.168.1.36:/data/tmp/build/dev"
+                sshagent(credentials : ['fc169dae-9ebe-4279-ae37-cb41e3fead87']) {
+                    sh "scp -r ${WORKSPACE}/build root@120.25.167.40:/data/tmp/build/dev"
                 }
             }
         }
