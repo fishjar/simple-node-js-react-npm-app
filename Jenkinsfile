@@ -42,7 +42,7 @@ pipeline {
         // }
         stage('Deploy dev') {
             when { branch 'dev' }
-            agent { label 'master' }
+            // agent { label 'master' }
             steps {
                 // sh """
                 //     echo "Deploy dev"
