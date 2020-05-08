@@ -1,11 +1,12 @@
 pipeline {
-    agent {
-        // docker {
-        //     image 'node:6-alpine'
-        //     args '-p 3000:3000'
-        // }
-        docker 'node:6-alpine'
-    }
+    // agent {
+    //     // docker {
+    //     //     image 'node:6-alpine'
+    //     //     args '-p 3000:3000'
+    //     // }
+    //     docker 'node:6-alpine'
+    // }
+    agent none
     environment {
         CI = 'true'
     }
@@ -15,22 +16,17 @@ pipeline {
         //         echo "-------WORKSPACE-------->: ${WORKSPACE}"
         //     }
         // }
-        stage('Install') {
+        stage('Build') {
+            agent { docker 'node:6-alpine' }
             steps {
                 // sh 'npm install --registry https://registry.npm.taobao.org'
                 sh 'npm install'
-            }
-        }
-        stage('Build') {
-            steps {
                 sh 'npm run build'
             }
         }
         stage('Deploy dev') {
-            agent none
-            when {
-                branch 'dev'
-            }
+            when { branch 'dev' }
+            agent { label 'master' }
             steps {
                 // sh """
                 //     echo "Deploy dev"
