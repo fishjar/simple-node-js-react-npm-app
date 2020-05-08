@@ -35,7 +35,7 @@ pipeline {
                 // """
                 echo "----WORKSPACE----: ${WORKSPACE}"
                 sshagent(credentials : ['583a9537-f155-4cbd-b8ad-103ab53eed0c']) {
-                    sh "scp ${WORKSPACE}/build root@192.168.1.36:/data/tmp/build/dev"
+                    sh "scp -r ${WORKSPACE}/build root@192.168.1.36:/data/tmp/build/dev"
                 }
             }
         }
