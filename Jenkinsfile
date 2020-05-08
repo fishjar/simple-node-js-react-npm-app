@@ -16,16 +16,16 @@ pipeline {
         //         echo "-------WORKSPACE-------->: ${WORKSPACE}"
         //     }
         // }
-        // stage('Build') {
-        //     agent { docker 'node:6-alpine' }
-        //     steps {
-        //         // sh 'npm install --registry https://registry.npm.taobao.org'
-        //         // sh 'npm install'
-        //         // sh 'npm run build'
-        //         sh 'yarn --registry https://registry.npm.taobao.org'
-        //         sh 'yarn build'
-        //     }
-        // }
+        stage('Build') {
+            agent { docker 'node:6-alpine' }
+            steps {
+                // sh 'npm install --registry https://registry.npm.taobao.org'
+                // sh 'npm install'
+                // sh 'npm run build'
+                sh 'yarn --registry https://registry.npm.taobao.org'
+                sh 'yarn build'
+            }
+        }
         // stage('Deploy dev') {
         //     when { branch 'dev' }
         //     agent { label 'master' }
@@ -48,7 +48,8 @@ pipeline {
                 //     echo "Deploy dev"
                 // """
                 echo "----WORKSPACE----: ${WORKSPACE}"
-                sh 'ssh root@192.168.1.36 uptime'
+                // sh 'ssh root@192.168.1.36 uptime'
+                sh "scp -r ${WORKSPACE}/build root@192.168.1.36:/data/tmp/build/dev"
             }
         }
         // stage('Deploy product') {
