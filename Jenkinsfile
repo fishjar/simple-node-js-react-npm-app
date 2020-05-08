@@ -20,8 +20,10 @@ pipeline {
             agent { docker 'node:6-alpine' }
             steps {
                 // sh 'npm install --registry https://registry.npm.taobao.org'
-                sh 'npm install'
-                sh 'npm run build'
+                // sh 'npm install'
+                // sh 'npm run build'
+                sh 'yarn --registry https://registry.npm.taobao.org'
+                sh 'yarn build'
             }
         }
         stage('Deploy dev') {
