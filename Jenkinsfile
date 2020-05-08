@@ -29,7 +29,7 @@ pipeline {
             }
         }
         stage('Deploy product') {
-            when { branch 'dev' }
+            when { branch 'product' }
             agent { label 'master' }
             steps {
                 sh "ssh root@192.168.1.36 'mkdir -p /data/tmp/build/product'"
